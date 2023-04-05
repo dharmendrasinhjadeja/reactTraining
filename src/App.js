@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import TweetsList from './components/tweetslist'
+import UserTweetsList from './components/UserDetailsPage'
+import LoginComp from './components/LoginComp'
+import ProfileComp from './components/ProfileComp'
+import UserTweet from './components/UserTweet'
+import React from 'react'
+import ProtectedRoute from './routing/ProtectedRoute'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Sidebar from './Sidebar/Sidebar'
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Router>
+        <Sidebar />
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<TweetsList />}></Route>
+          </Route>
+          <Route path="/login" element={<LoginComp />} />
+          <Route path="/user-details/:id" element={<UserTweetsList />} />
+          <Route path="/fweets/:id" element={<UserTweet />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/user-profile" element={<ProfileComp />} />
+          </Route>
+        </Routes>
+      </Router>
+    </>
+  )
 }
-
-export default App;
